@@ -51,7 +51,6 @@ class RoomTest {
         assertTrue(toString.contains("22"));
         assertTrue(toString.contains("Your hotel room is smarter than you"));
         assertTrue(toString.contains("Room type description"));
-        // assertTrue(toString.contains("55"));
     }
 
 }

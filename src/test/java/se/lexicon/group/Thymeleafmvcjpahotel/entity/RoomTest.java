@@ -2,7 +2,6 @@ package se.lexicon.group.Thymeleafmvcjpahotel.entity;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoomTest {
@@ -11,9 +10,8 @@ class RoomTest {
 
     @BeforeEach
     void setUp() {
-        roomType = new RoomType( "Room type description");
+        roomType = new RoomType("Room type description");
         testObject = new Room("102", "22", (short) 2, "Your hotel room is smarter than you", true, roomType);
-
     }
 
     @Test
@@ -30,15 +28,14 @@ class RoomTest {
 
     @Test
     void testEquals() {
-        RoomType roomType1 = new RoomType( "Room type description");
+        RoomType roomType1 = new RoomType("Room type description");
         Room room1 = new Room("102", "22", (short) 2, "Your hotel room is smarter than you", true, roomType1);
-
         assertTrue(testObject.equals(room1));
     }
 
     @Test
     void testHashCode() {
-        RoomType roomType1 = new RoomType( "Room type description");
+        RoomType roomType1 = new RoomType("Room type description");
         Room room1 = new Room("102", "22", (short) 2, "Your hotel room is smarter than you", true, roomType1);
         assertEquals(room1.hashCode(), testObject.hashCode());
     }
@@ -53,4 +50,14 @@ class RoomTest {
         assertTrue(toString.contains("Room type description"));
     }
 
+    @Test
+    void getDescription() {
+        assertEquals("Your hotel room is smarter than you", testObject.getDescription());
+    }
+
+    @Test
+    void setDescription() {
+        testObject.setDescription("Your hotel room is smarter than you");
+        assertEquals("Your hotel room is smarter than you", testObject.getDescription());
+    }
 }

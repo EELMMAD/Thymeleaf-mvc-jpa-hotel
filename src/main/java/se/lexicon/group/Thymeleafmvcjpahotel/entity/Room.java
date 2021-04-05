@@ -17,7 +17,7 @@ public class Room {
     private String description;
     private Boolean available;
 
-    @ManyToOne
+    @ManyToOne(cascade ={CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "room_type_id",referencedColumnName = "roomTypeId")
     private RoomType roomType;
 

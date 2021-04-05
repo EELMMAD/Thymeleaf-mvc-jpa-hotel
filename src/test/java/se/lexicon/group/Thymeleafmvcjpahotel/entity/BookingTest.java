@@ -53,5 +53,4 @@ class BookingTest {
         assertTrue(toString.contains(testObject.getDescription()));
         assertTrue(toString.contains(testObject.getBookingId()));
     }
-
 }

@@ -73,6 +73,7 @@ public class CustomerDTO implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
     //converting  list of Customer to list of CustomerDTO
     public static List<CustomerDTO> toCustomerDto(List<Customer> customers) {
         List<CustomerDTO> result = new ArrayList<>();

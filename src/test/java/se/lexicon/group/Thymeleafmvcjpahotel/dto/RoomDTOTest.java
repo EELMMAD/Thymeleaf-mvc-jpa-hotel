@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import se.lexicon.group.Thymeleafmvcjpahotel.entity.Room;
 import se.lexicon.group.Thymeleafmvcjpahotel.entity.RoomType;
-
 import java.util.ArrayList;
 import java.util.List;
 

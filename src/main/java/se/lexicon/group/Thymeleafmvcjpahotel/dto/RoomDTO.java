@@ -95,7 +95,7 @@ public class RoomDTO implements Serializable {
     public void setFloor(Short floor) {
         this.floor = floor;
     }
-    /////
+
     public static List<RoomDTO> toRoomDto(List<Room> rooms) {
         List<RoomDTO> result = new ArrayList<>();
         for (Room room : rooms) {

@@ -13,5 +13,4 @@ public class ThymeleafMvcJpaHotelApplication {
 		MyDataSource.getConnection();
 		SpringApplication.run(ThymeleafMvcJpaHotelApplication.class, args);
 	}
-
 }

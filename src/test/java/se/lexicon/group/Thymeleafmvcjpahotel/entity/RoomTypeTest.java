@@ -16,7 +16,6 @@ class RoomTypeTest {
     @Test
     void successfully_created() {
         assertNotNull(testObject);
-        // assertEquals("55", testObject.getRoomTypeId());
         assertEquals("Your hotel room is smarter than you", testObject.getDescription());
     }
 
@@ -35,8 +34,22 @@ class RoomTypeTest {
     @Test
     void testToString() {
         String toString = testObject.toString();
-        // assertTrue(toString.contains("55"));
         assertTrue(toString.contains("Your hotel room is smarter than you"));
     }
 
+    @Test
+    void getRoomTypeId() {
+        assertEquals(null, testObject.getRoomTypeId());
+    }
+
+    @Test
+    void getDescription() {
+        assertEquals("Your hotel room is smarter than you", testObject.getDescription());
+    }
+
+    @Test
+    void setDescription() {
+        testObject.setDescription("Smart room");
+        assertEquals("Smart room", testObject.getDescription());
+    }
 }

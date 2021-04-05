@@ -49,5 +49,4 @@ class CustomerTest {
         assertTrue(toString.contains(testObject.getLastName()));
         assertTrue(toString.contains(testObject.getEmail()));
     }
-
 }

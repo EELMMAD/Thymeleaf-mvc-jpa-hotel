@@ -10,6 +10,9 @@ public class RoomTypeDTO implements Serializable {
     private String roomTypeId;
     private String description;
 
+    public RoomTypeDTO() {
+    }
+
     public RoomTypeDTO(String roomTypeId, String description) {
         this.roomTypeId = roomTypeId;
         this.description = description;

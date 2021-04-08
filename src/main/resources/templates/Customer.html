@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<div style="background-color: #8f8d8d;display: flex;text-align: center;justify-content: center;padding: 20px">
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Customer.html">Customer Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="RoomType.html">Room Type
+        Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Room.html">Room Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Booking.html">Booking Service</a>
+</div>
+<div style="width: 100%;margin-top: 50px;margin-bottom:50px;text-align: center">
+    <h1>Customer Service</h1>
+</div>
+
+<table style="direction: ltr;text-align: left">
+    <tr>
+        <td>
+            <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off" style="text-align: left">
+                <div style="text-align: left">
+                    <label>Name</label><label class="validation-error hide" id="firstNameValidationError">Can not be
+                    Empty</label>
+                    <input type="text" name="firstName" id="firstName">
+                </div>
+                <div style="text-align: left">
+                    <label>Last Name</label><label class="validation-error hide" id="lastNameValidationError">Can not be
+                    Empty</label>
+                    <input type="text" name="lastName" id="lastName">
+                </div>
+                <div style="text-align: left">
+                    <label>Email</label><label class="validation-error hide" id="emailValidationError">Can not be
+                    Empty</label>
+                    <input type="text" name="email" id="email">
+                </div>
+                <div class="form-action-buttons">
+                    <input type="submit" value="Confirm">
+                </div>
+
+            </form>
+        </td>
+        <td>
+            <table class="list" id="customerList">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+<script src="CustomerScript.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Booking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<div style="background-color: #8f8d8d;display: flex;text-align: center;justify-content: center;padding: 20px">
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Customer.html">Customer Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="RoomType.html">Room Type
+        Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Room.html">Room Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Booking.html">Booking Service</a>
+</div>
+<div style="width: 100%;margin-top: 50px;margin-bottom:50px;text-align: center">
+    <h1>Booking service</h1>
+</div>
+<table style="direction: ltr">
+    <tr>
+        <td>
+            <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
+                <div>
+                    <label>Customer</label>
+                    <input type="text" name="customer" id="customer">
+                </div>
+                <div>
+                    <label>Room</label>
+                    <input type="text" name="room" id="room">
+                </div>
+                <div>
+                    <label>Create Date</label>
+                    <input type="date" name="CreateDate" id="CreateDate">
+                </div>
+                <div>
+                    <label>Booking Date</label>
+                    <input type="date" name="ReserveDate" id="ReserveDate">
+                </div>
+                <div class="form-action-buttons">
+                    <input type="submit" value="Confirm">
+                </div>
+            </form>
+        </td>
+        <td>
+            <table class="list" id="BookingList">
+                <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Room</th>
+                    <th>Create Date</th>
+                    <th>Booking Date</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+<script src="BookingScript.js"></script>
+</body>
+
+</html>

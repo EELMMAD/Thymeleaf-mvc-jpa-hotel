@@ -20,7 +20,6 @@ class RoomTypeServiceImplTest {
     RoomTypeDTO roomTypeDTO1 = new RoomTypeDTO();
     RoomTypeDTO roomTypeDTO2 = new RoomTypeDTO();
 
-
     @Autowired
     RoomTypeRepository roomTypeRepository;
 

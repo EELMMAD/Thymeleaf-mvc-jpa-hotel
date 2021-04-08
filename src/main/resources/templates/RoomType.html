@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>RoomType</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body style=" text-align: left">
+<div style="background-color: #8f8d8d;display: flex;text-align: center;justify-content: center;padding: 20px">
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Customer.html">Customer Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="RoomType.html">Room Type
+        Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Room.html">Room Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Booking.html">Booking Service</a>
+</div>
+<div style="width: 100%;margin-top: 50px;margin-bottom:50px;text-align: center">
+    <h1>Room Type Service</h1>
+</div>
+<table>
+    <tr>
+        <td>
+            <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
+                <div style="text-align: left">
+                    <label>Describe</label><label class="validation-error hide" id="describeValidationError">Can not be
+                    Empty</label>
+                    <input type="text" name="describe" id="describe">
+                </div>
+                <div class="form-action-buttons">
+                    <input type="submit" value="Confirm">
+                </div>
+            </form>
+        </td>
+        <td>
+            <table class="list" id="roomTypeList">
+                <thead>
+                <tr>
+                    <th>Describe</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+<script src="RoomTypeScript.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Room</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<div style="background-color: #8f8d8d;display: flex;text-align: center;justify-content: center;padding: 20px">
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Customer.html">Customer Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="RoomType.html">Room Type
+        Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Room.html">Room Service</a>
+    <a style="margin-left: 30px;color: white;font-size: large;cursor: pointer" href="Booking.html">Booking Service</a>
+</div>
+<div style="width: 100%;margin-top: 50px;margin-bottom:50px;text-align: center">
+    <h1>Room Service</h1>
+</div>
+<table style="direction: ltr">
+    <tr>
+        <td>
+            <form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off" style="text-align: left">
+                <div>
+                    <label>Code</label><label class="validation-error hide" id="codeValidationError">Can not be
+                    Empty</label>
+                    <input type="text" name="code" id="code">
+                </div>
+                <div>
+                    <label>Describe</label><label class="validation-error hide" id="describeValidationError">Can not be
+                    Empty</label>
+                    <input type="text" name="describe" id="describe">
+                </div>
+                <div>
+                    <label>Room Type</label><label class="validation-error hide" id="roomTypeValidationError">Can not be
+                    Empty</label>
+                    <input type="text" name="roomType" id="roomType">
+                </div>
+                <div style="display: flex;direction: ltr;text-align: left" id="active">
+                    <br>
+                    <span style="margin-right: 20px">Room Status:   </span>
+
+                    <input type="radio" id="r1" name="rate" value="Active" checked="checked"> Active
+                    <input type="radio" id="r2" name="rate" value="Deactive"> Deactive
+
+
+                </div>
+                <div>
+                    <br>
+                    <label>Floor</label><label class="validation-error hide" id="floorValidationError">Can not be
+                    Empty</label>
+                    <input type="number" name="floor" id="floor">
+                </div>
+                <div class="form-action-buttons">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </td>
+        <td>
+            <table class="list" id="RoomList">
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Describe</th>
+                    <th>Room Type</th>
+                    <th>Room Status</th>
+                    <th>Floor</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+<script src="RoomScript.js"></script>
+</body>
+
+</html>

@@ -10,6 +10,7 @@ import se.lexicon.group.Thymeleafmvcjpahotel.entity.Room;
 import se.lexicon.group.Thymeleafmvcjpahotel.repository.BookingRepository;
 import se.lexicon.group.Thymeleafmvcjpahotel.repository.CustomerRepository;
 import se.lexicon.group.Thymeleafmvcjpahotel.repository.RoomRepository;
+import se.lexicon.group.Thymeleafmvcjpahotel.repository.RoomTypeRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -20,14 +21,20 @@ import java.util.Optional;
 @Service
 @Configurable
 public class BookingServiceImpl implements BookingService {
-    @Autowired
+
     BookingRepository bookingRepository;
-
-    @Autowired
     CustomerRepository customerRepository;
+    RoomRepository roomRepository;
+    RoomTypeRepository roomTypeRepository;
 
     @Autowired
-    RoomRepository roomRepository;
+    public BookingServiceImpl(BookingRepository bookingRepo,  CustomerRepository customerRepo,
+                              RoomRepository roomRepo,  RoomTypeRepository roomTypeRepo){
+        this.bookingRepository = bookingRepo;
+        this.customerRepository = customerRepo;
+        this.roomRepository = roomRepo;
+        this.roomTypeRepository = roomTypeRepo;
+    }
 
     @Transactional
     public Customer getCustomer(String customerId) {
@@ -49,11 +56,17 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingDTO> findAll() {
+        /*
         List<Booking> bookingList = bookingRepository.findAll();
         List<BookingDTO> bookingDTO=new ArrayList<BookingDTO>();
         for (Booking booking: bookingList)
             bookingDTO.add(new BookingDTO(booking));
         return bookingDTO;
+
+         */
+        List<Booking> bookingLists = bookingRepository.findAll();
+        if(bookingLists.isEmpty()) throw new RuntimeException("Could not find any booking");
+      return BookingDTO.toBookingDTOs(bookingLists);
     }
 
     @Override
@@ -64,7 +77,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking=new Booking();
         booking.setCustomer(getCustomer(bookingDTO.getCustomer().getCustomerId()));
         Room room=getRoom(bookingDTO.getRoom().getRoomId());
-        if (!room.getAvailable())
+       if (!room.getAvailable())
             throw new RuntimeException("room id is full");
         booking.setRoom(room);
         booking.setCreateDate(LocalDate.now());

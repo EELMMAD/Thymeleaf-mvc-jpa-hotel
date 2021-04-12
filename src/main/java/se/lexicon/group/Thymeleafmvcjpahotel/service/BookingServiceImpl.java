@@ -56,14 +56,6 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingDTO> findAll() {
-        /*
-        List<Booking> bookingList = bookingRepository.findAll();
-        List<BookingDTO> bookingDTO=new ArrayList<BookingDTO>();
-        for (Booking booking: bookingList)
-            bookingDTO.add(new BookingDTO(booking));
-        return bookingDTO;
-
-         */
         List<Booking> bookingLists = bookingRepository.findAll();
         if(bookingLists.isEmpty()) throw new RuntimeException("Could not find any booking");
       return BookingDTO.toBookingDTOs(bookingLists);

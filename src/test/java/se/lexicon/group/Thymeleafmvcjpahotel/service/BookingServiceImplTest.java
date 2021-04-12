@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.util.Assert;
 import se.lexicon.group.Thymeleafmvcjpahotel.dto.BookingDTO;
 import se.lexicon.group.Thymeleafmvcjpahotel.dto.CustomerDTO;
 import se.lexicon.group.Thymeleafmvcjpahotel.dto.RoomDTO;
@@ -18,6 +19,10 @@ import se.lexicon.group.Thymeleafmvcjpahotel.repository.RoomRepository;
 import se.lexicon.group.Thymeleafmvcjpahotel.repository.RoomTypeRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -66,7 +71,7 @@ class BookingServiceImplTest {
         roomType1 = new RoomType("first room type");
         roomType2 = new RoomType("second definition");
 
-       room1 = roomRepository.save(new Room("1", "one", (short)4, "vip room", true, roomType1));
+        room1 = roomRepository.save(new Room("1", "one", (short)4, "vip room", true, roomType1));
         room2 =roomRepository.save( new Room("22", "five", (short)6, "such a nice room", true, roomType2));
 
         customer1 = customerRepository.save(new Customer("123","elmira", "madadi", "elmiramadadi@gmail.com"));
@@ -100,17 +105,9 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void getCustomer() {
-    }
-
-    @Test
-    void getRoom() {
-    }
-
-    @Test
     void findById() {
-        assertEquals(bookingDTO1, testObject.findById(booking1.getBookingId()));
-        assertEquals(bookingDTO2, testObject.findById(booking2.getBookingId()));
+            assertEquals(bookingDTO1, testObject.findById(booking1.getBookingId()));
+            assertEquals(bookingDTO2, testObject.findById(booking2.getBookingId()));
     }
 
     @Test
@@ -140,17 +137,33 @@ class BookingServiceImplTest {
         assertTrue(testObject.findAll().contains(bookingDTO3));
     }
 
-    @Test
-    void cancel() {
-    }
-
-    @Test
-    void getBookingList() {
-    }
 
     @Test
     void update() {
+        bookingDTO2.setBookingDate(LocalDate.of(2016, 6, 8));
+        bookingDTO2 = testObject.update(bookingDTO2);
+        assertEquals(LocalDate.of(2016, 6, 8), bookingDTO2.getBookingDate());
 
+        try {
+            bookingDTO2.setBookingId("000");
+            bookingDTO2.setBookingDate(LocalDate.now());
+            bookingDTO2.setCreateDate(LocalDate.now());
+            Customer c = customerRepository.save(new Customer("119", "eli", "mira", "elimira@gmail.com"));
+            CustomerDTO customerDTO1 = new CustomerDTO(c);
+            bookingDTO2.setCustomer(customerDTO2);
+
+            RoomType roomType2 = roomTypeRepository.save(new RoomType("new new"));
+            Room room2 = roomRepository.save(new Room("ddd", "ppp", (short) 9, "3 description", true, roomType2));
+
+            RoomDTO roomDTO2 = new RoomDTO(room2);
+            bookingDTO2.setRoom(roomDTO2);
+
+
+            bookingDTO2.setCustomer(customerDTO1);
+            bookingDTO2 = testObject.update(bookingDTO2);
+            assertTrue(testObject.findAll().contains(bookingDTO2));
+            assertEquals(customerDTO1, bookingDTO2.getCustomer());
+        }catch (RuntimeException e){}
     }
 
     @Test

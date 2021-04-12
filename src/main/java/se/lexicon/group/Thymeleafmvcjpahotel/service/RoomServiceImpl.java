@@ -62,32 +62,40 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    @Transactional
-    public RoomDTO create(RoomDTO roomDTO)  throws RuntimeException {
-
-        Room room = new Room();
-        RoomType roomType = new RoomType();
-        room.setCode(roomDTO.getCode());
-        room.setDescription(roomDTO.getDescription());
-        room.setFloor(roomDTO.getFloor());
-        room.setAvailable(roomDTO.getAvailable());
-       // room.setRoomType(typeRepository.findById(roomDTO.getRoomType().getRoomTypeId()));
+        public RoomDTO create (RoomDTO roomDTO)  throws RuntimeException {
+        if (roomDTO.getRoomId().equals(""))
+            throw new RuntimeException("Room id is invalid");
+        if (roomRepo.findById(roomDTO.getRoomId()).isPresent())
+           throw new RuntimeException("Room already exists, please update");
+       Room room = new Room(roomDTO.getRoomId(), roomDTO.getCode(), roomDTO.getFloor(),
+                            roomDTO.getDescription(), roomDTO.getAvailable(),new RoomType(roomDTO.getDescription()));
+        room.setAvailable(roomDTO.isAvailable());
         return new RoomDTO(roomRepo.save(room));
     }
 
     @Override
     @Transactional
-    public RoomDTO update(RoomDTO roomDTO) {
-        Optional<Room> optionalRoom = roomRepo.findById(roomDTO.getRoomId());
-        if (!optionalRoom.isPresent())
-            throw new RuntimeException("Room doesn't exist");
-        Room room = optionalRoom.get();
-        room.setCode(roomDTO.getCode());
-        room.setDescription(roomDTO.getDescription());
-        room.setFloor(roomDTO.getFloor());
-        room.setAvailable(roomDTO.getAvailable());
-        room.setRoomType(typeRepository.findById(roomDTO.getRoomType().getRoomTypeId()).get());
-        return new RoomDTO(roomRepo.save(room));
+    public RoomDTO update(RoomDTO roomDTO) throws RuntimeException{
+            Optional<Room> optionalRoom = roomRepo.findById(roomDTO.getRoomId());
+            if (!optionalRoom.isPresent())
+                throw new RuntimeException("Room doesn't exist");
+            Room toUpdated = optionalRoom.get();
+            if (!toUpdated.getCode().equals(roomDTO.getCode()))
+                toUpdated.setCode(roomDTO.getCode());
+
+            if (toUpdated.getAvailable() != roomDTO.getAvailable())
+                toUpdated.setAvailable(roomDTO.getAvailable());
+
+            if (toUpdated.getFloor() != roomDTO.getFloor())
+                toUpdated.setFloor(roomDTO.getFloor());
+
+            if (!toUpdated.getRoomType().equals(roomDTO.getRoomType()))
+                toUpdated.setRoomType(new RoomType(roomDTO.getDescription()));
+
+            if (!toUpdated.getDescription().equals(roomDTO.getDescription()))
+                toUpdated.setDescription(roomDTO.getDescription());
+
+            return new RoomDTO(roomRepo.save(toUpdated));
     }
 
     @Override

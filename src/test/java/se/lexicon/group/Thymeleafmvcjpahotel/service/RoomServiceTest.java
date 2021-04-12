@@ -11,9 +11,6 @@ import se.lexicon.group.Thymeleafmvcjpahotel.entity.RoomType;
 import se.lexicon.group.Thymeleafmvcjpahotel.repository.RoomRepository;
 import se.lexicon.group.Thymeleafmvcjpahotel.repository.RoomTypeRepository;
 
-import java.util.List;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -26,7 +23,6 @@ class RoomServiceTest {
 
     Room firstRoom;
     Room secondRoom;
-    Room thirdRoom;
 
     RoomType firstRoomType;
     RoomType secondRoomType;
@@ -34,11 +30,9 @@ class RoomServiceTest {
 
     RoomTypeDTO roomTypeDTO1 = new RoomTypeDTO();
     RoomTypeDTO roomTypeDTO2 = new RoomTypeDTO();
-    RoomTypeDTO roomTypeDTO3 = new RoomTypeDTO();
 
     RoomDTO roomDTO1 = new RoomDTO();
     RoomDTO roomDTO2 = new RoomDTO();
-    RoomDTO roomDTO3 = new RoomDTO();
 
     @Autowired
     RoomTypeRepository roomTypeRepository;
@@ -50,23 +44,24 @@ class RoomServiceTest {
     void setUp() {
         testObject = new RoomServiceImpl(roomRepository);
 
-        roomTypeServiceImp = new  RoomTypeServiceImpl(roomTypeRepository);
-        roomServiceImp = new  RoomServiceImpl(roomRepository);
+        roomTypeServiceImp = new RoomTypeServiceImpl(roomTypeRepository);
+        roomServiceImp = new RoomServiceImpl(roomRepository);
 
-        firstRoomType = roomTypeRepository.save( new RoomType("Such a nice room type"));
+        firstRoomType = roomTypeRepository.save(new RoomType("Such a nice room type"));
         secondRoomType = roomTypeRepository.save(new RoomType("Best room you have ever seen"));
         thirdRoomType = roomTypeRepository.save(new RoomType("Such a nice roomType"));
 
-        firstRoom = roomRepository.save(new Room("102", "aa", (short)4, "Your hotel room is smarter than you", true, firstRoomType));
-        secondRoom = roomRepository.save(new Room("100", "bb", (short)8, "Second room description",  true, secondRoomType));
-        thirdRoom = roomRepository.save(new Room());
+        roomTypeDTO1 = new RoomTypeDTO(firstRoomType);
+        roomTypeDTO2 = new RoomTypeDTO(secondRoomType);
 
+        firstRoom = roomRepository.save(new Room("102", "aa", (short) 4, "Your hotel room is smarter than you", true, firstRoomType));
+        secondRoom = roomRepository.save(new Room("100", "bb", (short) 8, "Second room description", true, secondRoomType));
         roomDTO1 = new RoomDTO(firstRoom);
         roomDTO2 = new RoomDTO(secondRoom);
     }
 
     @Test
-    void successfully_created(){
+    void successfully_created() {
         assertNotNull(roomTypeServiceImp);
         assertNotNull(firstRoomType);
         assertNotNull(secondRoomType);
@@ -93,16 +88,28 @@ class RoomServiceTest {
     }
 
     @Test
-    void findByRoomType() {
-
-    }
-
-    @Test
     void create() {
+        RoomDTO roomDTO3 = new RoomDTO();
+        RoomType roomType3 = roomTypeRepository.save(new RoomType("new new"));
+        RoomTypeDTO roomTypeDTO3 = new RoomTypeDTO(roomType3);
+        roomDTO3.setCode("ddd");
+        roomDTO3.setRoomId("ppp");
+        roomDTO3.setDescription("3 description");
+        roomDTO3.setRoomType(roomTypeDTO3);
+        roomDTO3.setAvailable(true);
+        roomDTO3 = testObject.create(roomDTO3);
+
+        assertEquals(3, testObject.findAll().size());
+        assertTrue(testObject.findAll().contains(roomDTO3));
+        assertTrue(testObject.findAll().contains(roomDTO3));
     }
 
     @Test
     void update() {
+        roomDTO2.setDescription("Wonderful description");
+        roomDTO2.setFloor((short) 3);
+        testObject.update(roomDTO2);
+        assertEquals("Wonderful description", roomDTO2.getDescription());
     }
 
     @Test

@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import se.lexicon.group.Thymeleafmvcjpahotel.dto.CustomerDTO;
+import se.lexicon.group.Thymeleafmvcjpahotel.dto.RoomDTO;
 import se.lexicon.group.Thymeleafmvcjpahotel.entity.Customer;
+import se.lexicon.group.Thymeleafmvcjpahotel.entity.Room;
+import se.lexicon.group.Thymeleafmvcjpahotel.entity.RoomType;
 import se.lexicon.group.Thymeleafmvcjpahotel.exceptions.ResourceNotFoundException;
 import se.lexicon.group.Thymeleafmvcjpahotel.repository.CustomerRepository;
 import se.lexicon.group.Thymeleafmvcjpahotel.repository.RoomRepository;
@@ -12,6 +15,7 @@ import se.lexicon.group.Thymeleafmvcjpahotel.repository.RoomRepository;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Configurable
@@ -40,11 +44,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO findById(String customerId) throws ResourceNotFoundException {
+    public CustomerDTO findById(String customerId) throws RuntimeException {
         if (!customerRepo.existsById(customerId))
-            throw new ResourceNotFoundException("Cannot find any customer user with id: " + customerId);
+            throw new RuntimeException("There is no customer with id: " + customerId);
         Customer customer = customerRepo.findByCustomerId(customerId);
-        return getCustomerDto(customer);
+        return new CustomerDTO(customer);
     }
 
     @Override
@@ -68,23 +72,27 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO create(CustomerDTO customerDTO) throws RuntimeException {
         if (customerRepo.existsById(customerDTO.getCustomerId()))
             throw new RuntimeException("Customer already exists, please update");
-        Customer toCreate = new Customer();
-        toCreate.setEmail(customerDTO.getEmail());
-        toCreate.setFirstName(customerDTO.getFirstName());
-        toCreate.setLastName(customerDTO.getLastName());
-        return getCustomerDto(customerRepo.save(toCreate));
+        Customer toCreate = new Customer(customerDTO.getCustomerId(), customerDTO.getFirstName(), customerDTO.getLastName(), customerDTO.getEmail());
+        return new CustomerDTO(customerRepo.save(toCreate));
     }
 
     @Override
     @Transactional
-    public CustomerDTO update(CustomerDTO customerDTO) {
-        if (customerRepo.existsById(customerDTO.getCustomerId()))
-            throw new RuntimeException("customer does not exist, please create first");
-        Customer customer = customerRepo.findById(customerDTO.getCustomerId()).get();
-        customer.setEmail(customerDTO.getEmail());
-        customer.setFirstName(customerDTO.getFirstName());
-        customer.setLastName(customerDTO.getLastName());
-        return getCustomerDto(customerRepo.save(customer));
+    public CustomerDTO update(CustomerDTO customerDTO) throws RuntimeException{
+            Optional<Customer> optionalCustomer = customerRepo.findById(customerDTO.getCustomerId());
+            if (!optionalCustomer.isPresent())
+                throw new RuntimeException("Customer doesn't exist");
+            Customer toUpdated = optionalCustomer.get();
+            if (!toUpdated.getFirstName().equals(customerDTO.getFirstName()))
+                toUpdated.setFirstName(customerDTO.getFirstName());
+
+        if (!toUpdated.getLastName().equals(customerDTO.getLastName()))
+            toUpdated.setLastName(customerDTO.getLastName());
+
+            if (!toUpdated.getEmail().equals(customerDTO.getEmail()))
+                toUpdated.setEmail(customerDTO.getEmail());
+
+            return new CustomerDTO(customerRepo.save(toUpdated));
     }
 
     @Override

@@ -59,6 +59,7 @@ class RoomTypeServiceImplTest {
     void create() {
         RoomTypeDTO roomTypeDTO3 = new RoomTypeDTO();
         roomTypeDTO3.setDescription("Third description");
+        roomTypeDTO3.setRoomTypeId("000");
         roomTypeDTO3 = testObject.create(roomTypeDTO3);
         assertEquals(3, testObject.findAll().size());
         assertTrue(testObject.findAll().contains(roomTypeDTO3));

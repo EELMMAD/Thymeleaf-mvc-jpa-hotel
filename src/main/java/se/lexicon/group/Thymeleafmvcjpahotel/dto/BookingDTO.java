@@ -8,6 +8,8 @@ import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class BookingDTO implements Serializable {
@@ -44,6 +46,15 @@ public class BookingDTO implements Serializable {
         this.room = new RoomDTO(booking.getRoom());
         this.bookingDate = booking.getBookingDate();
         this.createDate = booking.getCreateDate();
+    }
+
+    public static List<BookingDTO> toBookingDTOs(List<Booking> bookings) {
+        List<BookingDTO> result = new ArrayList<>();
+        for (Booking booking : bookings){
+            BookingDTO bookingDto = new BookingDTO(booking);
+            result.add(bookingDto);
+        }
+        return result;
     }
 
     public String getBookingId() {

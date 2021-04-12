@@ -1,6 +1,5 @@
 package se.lexicon.group.Thymeleafmvcjpahotel.contoller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -42,4 +41,3 @@ public class RoomTypeController {
         return ResponseEntity.ok(roomTypeService.create(RoomTypeDTO));
     }
 }
-
